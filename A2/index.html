@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Title Page</title>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1 class="text-center">Hello World</h1>
+
+        
+        <div class="row">
+            
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-4 well">
+                <div class="form-group">
+                    <legend class="text-center">TESTE KNOCKOUT</legend>
+                </div>
+                <div class="form-group">
+                    <label for="txtNome">Nome</label>  
+                    <input type="text" class="form-control" value="" id="txtNome" placeholder="Nome" data-bind="value: Nome">
+                </div>
+                <div class="form-group">
+                    <label for="txtSobrenome">Sobrenome</label>  
+                    <input type="text" class="form-control" value="" id="txtSobrenome" placeholder="Sobrenome" data-bind="value: Sobrenome">
+                </div>
+                <br/><br> 
+                <mark data-bind="visible: Nome && Sobrenome">Olá&nbsp;<span data-bind="text: NomeCompleto"></span></mark>   
+
+            </div>
+            
+        </div>
+        
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/bower_components/knockout/knockout.js"></script>
+        <script>
+            var ViewModel = function(){
+                //CRIAMOS UMA VARIAVEL RESPONSAVEL PELA SUA JANELA DO NAVEGADOR
+                //ASSIM NÃO NÃO EMBARALHA AS INFORMAÇÕES COM AS INFORMAÇÕES DE 
+                //OUTRAS ABAS NO SO SEU NAVEGADOR
+                var self = this;
+                
+                //KO = é a variavel padrão do KNOCKOUT, 
+                //pra chamar qualquer evento da LIB / BIBLIOTECA
+
+                //ko.observable() = AQUI NOS CRIAMOS UM OUVINTE PARA NOSSA PAGINA
+                //ELE VAI BUSCAR NO HTML UM ATRIBUTO COMO SEGUINTE VALOR
+                //data-bind = "value: Nome"
+                //COLOQUEI O CODIGO ACIMA NO INPUT HTML A SER MONITORADO
+                //this.Nome = ko.observable();
+                self.Nome = ko.observable('');
+                self.Sobrenome = ko.observable('');
+
+                //COMPUTED
+                self.NomeCompleto = ko.computed(function(){
+                    var nomeCompleto = self.Nome() + " " + self.Sobrenome();
+                    return nomeCompleto;
+                }, self);
+            };
+            
+            //INICIALIZAMOS O NOSSO MONITORAMENTO DE VIEWMODELS
+            ko.applyBindings(new ViewModel())
+        </script>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "Curso-Knouckout",
+  "homepage": "Index.html",
+  "authors": [
+    "Jean Lopes"
+  ],
+  "description": "Curso-Knouckout",
+  "main": "index.html",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "Knouckout"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "knockout": "knockout.js#~3.1.0"
+  }
+}
