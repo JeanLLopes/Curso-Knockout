@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Title Page</title>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    </head>
+    <body class="container">
+        <h1 class="text-center">OBSERVABLE ARRAYS</h1>
+
+        
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>NOME DO CLIENTE</th>
+                    <th>REFEIÇÃO</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: hospedes">
+                <tr>
+                    <td data-bind="text: nomeCliente"></td>
+                    <td data-bind="text: refeicao"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <select data-bind="options: hospedes, optionsValue: 'nomeCliente', optionsText: 'nomeCliente'"></select>
+        <br /><br />
+        <!-- AQUI NO EXEMPLO ABAIXO NOS USAMOS A VARIAVEL INTERNA DO KNOCKOUT CHAMADO
+        $root ELA VAI TER ACESSO A TODAS AS VARIAVEIS OU OBSERVABLES
+        CRIADAS DENTRO DESTE CÓDIGO -->
+        <select data-bind="options: $root.ExemploArray, value: 'Idade', optionsText:'Nome'"></select>
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/bower_components/knockout/knockout.js"></script>
+        <script>
+            
+
+            function Reserva(nomeCliente, refeicao){
+                //SETAMOS NOSSO this
+                var self = this;
+
+                self.nomeCliente = nomeCliente;
+                self.refeicao = refeicao;
+            }
+
+            var ViewModel = function(){
+                //SETAMOS NOSSO this
+                var self = this;
+                
+                //ARRAY EM JAVASCRIPT COM KNOCKOUT
+                //onde no HTML vamos chamar da seguinte maneira
+                //data-bind="options: hospedes" ... 
+                self.hospedes = ko.observableArray([
+                    new Reserva("Jean","Arroz"),
+                    new Reserva("Wagner", "Urubu"),
+                ])
+                
+                //ARRAY EM JAVASCRIPT
+                //agora se ue quiser chamar um array feito em javascript 
+                //eu tenho que acessar o root do Knockout
+                //usando o seguinte codigo
+                //data-bind="options: $root.ExemploArray" ...
+                self.ExemploArray = [
+                    {Nome: 'jean', Idade: 27},
+                    {Nome: 'rean', Idade: 27},
+                    {Nome: 'qean', Idade: 27},
+                ]
+            }
+
+            ko.applyBindings(new ViewModel())
+        </script> 
+        
+    </body>
+</html>
