@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Title Page</title>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.3/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <h1 class="text-center">knockout</h1>
+        <div class="col-sm-4 col-md-4 col-lg-4 col-md-offset-4  col-lg-offset-4 well">
+            <div class="input-group">
+                <input data-bind="value: cliente" type="text" name="" id="input${1/(\w+)/\u\1/g}" required="required"  class="form-control" placeholder="Nome Cliente...">
+                <span class="input-group-btn">
+                  <button data-bind="click: AdicionarCliente" class="btn btn-secondary" type="button">Reservar</button>
+                </span>
+            </div>
+        </div>
+    
+        <div class="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4 well">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Passageiro</th>
+                        <th>Comida</th>
+                        <th>Valor</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <!-- Todo: Generate table body -->
+                <tbody data-bind="foreach: listaReservas">
+                    <tr>
+                        <td data-bind="text: NomeCliente"></td>
+                        <td>
+                            <select data-bind="options: $root.ComidasDisponiveis, optionsText: 'NomeDaComida'"/>
+                        </td>
+                        <td data-bind="text: Refeicao.Preco"></td>
+                        <td>
+                            <a href="#">Remove</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <br />
+                <h3> Total surcharge $ <span></span>
+                </h3>
+                <br />
+            </table>
+        
+        </div>
+
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/bower_components/knockout/knockout.js"></script>
+        <script>
+            //MODEL
+            function Reserva(nomeCliente, refeicao){
+                var self = this;
+                self.NomeCliente = nomeCliente,
+                self.Refeicao = refeicao 
+            }
+
+            function ViewModel(){
+                //SETAMOS A NOSSA JANELA DE TRABALHO
+                var self = this;
+
+                //CRIAMOS UM OBSERVABLE ARRAY ZERADO
+                self.listaReservas = ko.observableArray([]);
+
+                //CRIAMOS UM OBSERVABLE PARA O MEU INPUT
+                //POIS ELE VAI SER RESPONSAVEL POR POPULAR MEU OBSERVABLEARRAY
+                self.cliente = ko.observable("");
+
+
+                //LISTA DO SERVER
+                //não esta sendo inserida no meu KNOCKOUT
+                self.ComidasDisponiveis = [
+                    { NomeDaComida: "Arroz com Feijão", Preco: "100.00"},
+                    { NomeDaComida: "Arroz com Batata", Preco: "200.00"},
+                    { NomeDaComida: "Arroz", Preco: "50.00"},
+                ]
+                
+                //AQUI NOS CRIAMOS O EVENTO CLICK DA PAGINA
+                //RESPONSAVEL POR ADICIONAR ITENS DENTRO DA LISTA
+                //DE CLIENTES 
+                self.AdicionarCliente = function(){
+                    debugger;
+                    //PARA PEGAR MEU CLIENTE EU USSO self.cliente()
+                    self.listaReservas.push(new Reserva(self.cliente(), self.ComidasDisponiveis[0]))
+                    debugger;
+                }
+
+
+                //AQUI CRIAMOS UMA FUNÇÃO RESPONSAVEL PELA SOMA
+            }
+            ko.applyBindings(new ViewModel())
+        </script>
+    </body>
+</html>
